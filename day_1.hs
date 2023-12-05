@@ -1,6 +1,7 @@
 import Data.Char
 import Data.Text (pack, unpack, replace)
 
+--Map of number names and name combos to actual numbers
 dictNums = [
 	 ("eighthree", "83"),
 	 ("eightwo", "82"),
@@ -19,10 +20,12 @@ dictNums = [
 	 ("nine", "9")
 	 ]
 
+--Replace numbers in words with actual numbers based on their name or potential number name combinations
 replaceTextNums::String -> [(String, String)] -> String
 replaceTextNums str [] = str
 replaceTextNums str ((a,b):xs) = if null xs
 		    	       	 then (unpack $ replace (pack a) (pack b) (pack str))
 				        else replaceTextNums (unpack $ replace (pack a) (pack b) (pack str)) xs
 
+--Get input as list of strings, replace number names with numbers, filter numbers, get first and last number in list
 main = interact $ show . sum . map (read::String -> Int) . map ((\(x:xs) -> x:[if null xs then x else last xs]) . filter isNumber) . (map ( `replaceTextNums` dictNums))  . lines
