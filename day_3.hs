@@ -55,16 +55,58 @@ filterValidNums::[Int] -> [Bool] -> [Int]
 filterValidNums numbers bools = [ a | (a,b) <- validityPairs, b == True]
   where validityPairs = zip numbers bools
 
-main :: IO ()
-main = do
-  contents <- getContents
-  let textLines = lines contents
-  
-  --Get index of all digits and symbols
-  let numsID = findNumIndexes textLines
-  let symsID = findSymbolIndexes textLines
-  
-  let numbers = getNums textLines
-  let validityBools =  map (`isValidNumber` symsID) $  multiGroup $ numsID
+--Get list of bools that validates each number's index
+getValidNumberIndexes::[String] -> [Bool]
+getValidNumberIndexes strs =
+  let syms = findSymbolIndexes strs
+      nums = findNumIndexes strs
+  in map (`isValidNumber` syms) $  multiGroup $ nums
 
-  putStrLn $ show $ sum $ filterValidNums numbers validityBools
+--Find ID of all asterisks
+getAllAsterisks::[String] -> [(Int,Int)]
+getAllAsterisks strs = [(a,b) | (a,b) <- findSymbolIndexes strs, strs!!a!!b == '*']
+
+--Pair consecutive findNumIndexes
+pairConsecutive :: [a] -> [(a, a)]
+pairConsecutive [] = []
+pairConsecutive (x:y:xs) = (x,y):pairConsecutive xs
+
+--Get Gear Ratios (Ignore how horribly made this is)
+getGearRatios::[String] -> [Int]
+getGearRatios strs =
+  let validGroups =
+        let nums = findNumIndexes strs
+            groups = multiGroup nums
+            validityBools = getValidNumberIndexes strs
+
+        in [groups!!a | a <- [0..length groups - 1], validityBools!!a == True]
+
+      asterisks = getAllAsterisks strs
+      asteriskInGroup = map (\asterisk -> map (\group -> any (`elem` group) (getNearby asterisk)) validGroups) asterisks
+        
+      validAsterisks =
+        let counts = map (\x -> length $ filter (==True) x) asteriskInGroup
+        in [if counts!!i == 2 then asteriskInGroup!!i else [] | i <- [0..length asteriskInGroup - 1]]
+      validGroupIndexes = concat $ filter (not . null)$ map (\bools -> if null bools then [] else filter (>=0) [if bools!!i == True then i else -1 | i <- [0..length bools -1]]) validAsterisks
+
+      nums = filterValidNums (getNums strs) (getValidNumberIndexes strs)
+  in map (\(a,b) -> a*b)$ pairConsecutive $  map (\index -> nums!!index) validGroupIndexes
+
+--Solve Part One
+partOne::[String] -> Int
+partOne strs =
+  let
+    numbers = getNums strs
+    validityBools = getValidNumberIndexes strs
+  in sum $ filterValidNums numbers validityBools
+
+--Solve Part Two
+partTwo::[String] -> Int
+partTwo strs = sum $ getGearRatios $ strs
+
+{-
+    ---------------MAIN FUNCTION--------------------
+-}
+
+main :: IO ()
+main = interact $ ("Results: " ++) . (++ "\n") . show . partTwo . lines
