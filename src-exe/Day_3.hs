@@ -1,3 +1,9 @@
+module Day_3
+  (
+    partOne
+  , partTwo
+  )where
+
 import Data.Char
 import Data.List (concat, groupBy)
 import Data.Text (pack, unpack, replace)
@@ -103,10 +109,3 @@ partOne strs =
 --Solve Part Two
 partTwo::[String] -> Int
 partTwo strs = sum $ getGearRatios $ strs
-
-{-
-    ---------------MAIN FUNCTION--------------------
--}
-
-main :: IO ()
-main = interact $ ("Results: " ++) . (++ "\n") . show . partTwo . lines

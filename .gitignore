@@ -3,3 +3,7 @@
 day_3
 *.hi
 *.o
+*.local
+*.local~
+dist-newstyle/
+*.cabal~

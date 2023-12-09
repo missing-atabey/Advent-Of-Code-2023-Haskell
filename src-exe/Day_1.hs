@@ -1,3 +1,7 @@
+module Day_1
+  (solution
+  ) where
+
 import Data.Char
 import Data.Text (pack, unpack, replace)
 
@@ -28,4 +32,4 @@ replaceTextNums str ((a,b):xs) = if null xs
 				        else replaceTextNums (unpack $ replace (pack a) (pack b) (pack str)) xs
 
 --Get input as list of strings, replace number names with numbers, filter numbers, get first and last number in list
-main = interact $ show . sum . map (read::String -> Int) . map ((\(x:xs) -> x:[if null xs then x else last xs]) . filter isNumber) . (map ( `replaceTextNums` dictNums))  . lines
+solution = interact $ show . sum . map (read::String -> Int) . map ((\(x:xs) -> x:[if null xs then x else last xs]) . filter isNumber) . (map ( `replaceTextNums` dictNums))  . lines

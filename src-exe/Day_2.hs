@@ -1,3 +1,9 @@
+module Day_2
+  (
+    partOne
+  , partTwo
+  )where
+
 colorLimits = [
     12, --Red
     13, --Green
