@@ -6,7 +6,7 @@
 Why not? It's a very different paradigm and it's very very powerful once mastered. I just wanted a way to get good at Haskell fast and this certainly is that.
 
 *** How can I run these?
-That's simple! Just clone this repo, CD into the directory, run SRC_<bash>{<cabal run>} and done!
+That's simple! Just clone this repo, CD into the directory, run SRC_<shell>{<cabal run>} and done!
 
 
 
