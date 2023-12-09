@@ -12,7 +12,7 @@ That's simple! Just clone this repo, edit the main function in the Main.hs file 
 cabal run
 #+END_SRC
 
-paste input and press C-d in your terminal to send an EOD signal, and done! Watch as u get the desired solution
+paste input and press C-d in your terminal to send an EOF signal, and done! Watch as u get the desired solution
 
 
 
