@@ -54,4 +54,3 @@ partTwo:: String -- ^
   -> String
 partTwo = show . sum . map evaluateGame' . lines
 
-main = interact $ partTwo
