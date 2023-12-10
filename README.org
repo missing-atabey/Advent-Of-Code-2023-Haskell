@@ -7,12 +7,12 @@ Why not? It's a very different paradigm and it's very very powerful once mastere
 
 *** How can I use these myself?
 
-**** What do u need installed?
+**** What u need installed:
 - GHC (for compiling Haskell)
 - Cabal (for building the package)
 
-**** How to actually run it?
-That's simple! Just clone this repo, edit the main function in the Main.hs file so it uses whatever day's solution u wanna use, run this from the root of the directory
+**** How to run it:
+Actually running this is simple! Just clone this repo, edit the main function in the Main.hs file so it uses whatever day's solution u wanna use, run this from the root of the directory
 
 #+BEGIN_SRC shell
 cabal run
